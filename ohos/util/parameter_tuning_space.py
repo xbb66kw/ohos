@@ -17,9 +17,7 @@ import hyperopt.pyll.stochastic
 from sklearn.model_selection import train_test_split
 
 from sklearn.ensemble import RandomForestRegressor
-import xgboost as xgb
-xgb.__version__ # works with xgboost version 1.5.0
-# $ conda install xgboost==1.5.0
+
 
 
 
@@ -27,62 +25,6 @@ from treeple.ensemble import ObliqueRandomForestRegressor,\
     PatchObliqueRandomForestRegressor
 
 from ohos.ProgressiveTree import transform_features
-
-#%%
-# Tuning parameter space and objective functions for XGBoost
-
-space_xgb = {
-    'max_depth': scope.int(hp.quniform("max_depth", 2, 15, 1)),
-    'gamma': hp.uniform('gamma', np.log(1e-8), np.log(7)),
-    'reg_alpha': hp.uniform('reg_alpha', np.log(1e-8), np.log(1e2)),
-    'reg_lambda': hp.uniform('reg_lambda', np.log(0.8), np.log(4)),
-    'learning_rate': hp.uniform('learning_rate', np.log(1e-5), np.log(0.7)),
-    'subsample': hp.uniform('subsample', 0.5, 1),
-    'colsample_bytree': hp.uniform('colsample_bytree', 0.5, 1),
-    'colsample_bylevel': hp.uniform('colsample_bylevel', 0.5, 1),
-    'min_child_weight': hp.quniform('min_child_weight', 0, 20, 1),
-    'n_estimators': 1000}
-
-# print(hyperopt.pyll.stochastic.sample(space_xgb))
-# test_set = hyperopt.pyll.stochastic.sample(space_xgb)
-# print(np.exp(test_set['gamma']), np.exp(test_set['learning_rate']), np.exp(test_set['reg_alpha']), np.exp(test_set['reg_lambda']), test_set['min_child_weight'])
-
-
-def objective_xgb_regression(space):
-
-
-    X_train_in, X_train_out, y_train_in, y_train_out = space['data']
-        
-    model=xgb.XGBRegressor(
-        n_estimators =space['n_estimators'], 
-        max_depth = int(space['max_depth']), 
-        gamma = np.exp(space['gamma']),
-        reg_alpha = np.exp(space['reg_alpha']),
-        reg_lambda = np.exp(space['reg_lambda']),
-        learning_rate = np.exp(space['learning_rate']),
-        min_child_weight=space['min_child_weight'],
-        colsample_bytree=space['colsample_bytree'],
-        colsample_bylevel = space['colsample_bylevel'],
-        subsample = space['subsample'])
-   
-
-    
-    # Define evaluation datasets.
-    evaluation = [( X_train_in, y_train_in), 
-                  ( X_train_out, y_train_out)]
-    
-    # Fit the model. Define evaluation sets, early_stopping_rounds,
-    # and eval_metric.
-    model.fit(X_train_in, y_train_in,
-            eval_set=evaluation, eval_metric="rmse",
-            early_stopping_rounds=20,verbose=False)
-
-    # Obtain prediction and rmse score.
-    pred = model.predict(X_train_out)
-    rmse = mean_squared_error(y_train_out, pred)
-    
-    # Specify what the loss is for each model.
-    return {'loss':rmse, 'status': STATUS_OK, 'model': model}
 
 
 #%%
