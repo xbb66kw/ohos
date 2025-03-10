@@ -33,8 +33,6 @@ from ohos.tree_functions import orf_train, porf_train, \
 import warnings 
 warnings.filterwarnings('ignore')
 
-# Problematic package
-# from obliquetree import Regressor
 #%%
 
 
@@ -42,7 +40,7 @@ warnings.filterwarnings('ignore')
 
 # parameter sets (s0, n_features)
 hyper_ = [(2, 10), (2, 30), (2, 300)]
-# hyper_ = [(2, 40)]
+
 
 
 #%%
@@ -138,7 +136,7 @@ for para_ in hyper_:
         mse_orf = mean_squared_error(y_test, y_pred_dspione)
         print(f"Mean Squared Error ORF: {mse_orf}, Use runtime: {end_time - start_time}")
         
-        # orf.get_params()
+        
         #%%
         start_time = time.time()
         porf_param, porf = porf_train(X_train_in, 
@@ -153,7 +151,7 @@ for para_ in hyper_:
         mse_porf = mean_squared_error(y_test, y_pred_dspione)
         print(f"Mean Squared Error PORF: {mse_porf}, Use runtime: {end_time - start_time}")
         
-        # xgb.get_params()
+        
         
         
         #%%
@@ -198,19 +196,7 @@ for para_ in hyper_:
         print(f"Mean Squared Error irf: {mse_irf}, Use runtime: {end_time - start_time}")
         
         
-        #%%
-        # # # Train the XGB model
-        # xgb_param, xgb, _ = xgb_train(X_train_in, 
-        #                            X_train_out, 
-        #                            y_train_in, 
-        #                            y_train_out, 
-        #                            max_evals = 30)
-        # # For XGB with only the orthogonal splits
-        # xgb.fit(X_train, y_train)
-        # y_pred_dspione = xgb.predict(X_test)
-        # mse_xgb = mean_squared_error(y_test, y_pred_dspione)
-        # print("Mean Squared Error XGB:", mse_xgb)
-    
+        
         #%%
         #####
         # Save the r square results for all models
