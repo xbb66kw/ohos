@@ -29,9 +29,7 @@ from treeple.ensemble import ObliqueRandomForestRegressor, \
     
 from ohos.CustomRF import CustomRF
 
-import xgboost as xgb
-xgb.__version__ # works with xgboost version 1.5.0
-# $ conda install xgboost==1.5.0
+
 
 from ohos.ProgressiveTree import ProgressiveTree
 
@@ -191,70 +189,6 @@ def rf_train(X_train_in,
     return best_param_rf, rf, p_s_n_weights[best_param['n_weights']]
 
 #%%
-
-def xgb_train(X_train_in, 
-              X_train_out, 
-              y_train_in,
-              y_train_out, 
-              pro_tree = None, 
-              max_evals = 30):
-    
-    
-    if pro_tree is not None:
-        space_xgb['pro_tree'] = pro_tree
-        
-        # 0: oblique splits are not used
-        # 1: oblique splits at the first layer are used
-        # 2^{k} - 1: oblique splits before the kth layer are used
-        if pro_tree.max_depth < 3:
-            p_s_n_weights = []
-            for k in range(pro_tree.max_depth):
-                p_s_n_weights.append(max(2**k - 1, 0))
-        else:    
-            p_s_n_weights = [0, 1, 3, 7, float('Inf')]
-        space_xgb['n_weights'] = hp.choice('n_weights', p_s_n_weights)
-        
-    
-        best_param_xgb = search_start(
-            X_train_in, 
-            X_train_out, 
-            y_train_in, 
-            y_train_out,
-            objective_xgb_regression,
-            space_xgb,
-            max_evals = max_evals
-            )
-    else:
-        best_param_xgb = search_start(
-            X_train_in, 
-            X_train_out, 
-            y_train_in, 
-            y_train_out,
-            objective_xgb_regression,
-            space_xgb,
-            max_evals = max_evals
-            )
-        best_param_xgb['n_weights'] = 0
-        p_s_n_weights = [None]
-    
-    best_param = best_param_xgb
-    
-    
-    reg_iterative_xgb=xgb.XGBRegressor(
-        n_estimators =1000, 
-        max_depth = int(best_param['max_depth']), 
-        gamma = np.exp(best_param['gamma']),
-        reg_alpha = np.exp(best_param['reg_alpha']),
-        reg_lambda = np.exp(best_param['reg_lambda']),
-        learning_rate = np.exp(best_param['learning_rate']),
-        min_child_weight=best_param['min_child_weight'],
-        colsample_bytree=best_param['colsample_bytree'],
-        colsample_bylevel = best_param['colsample_bylevel'],
-        subsample = best_param['subsample'])
-    
-    
-    return best_param_xgb, reg_iterative_xgb, p_s_n_weights[best_param['n_weights']]
-
 
     #%%
 def optimal_n_weight_train(X_train_in, 
