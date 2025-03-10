@@ -18,14 +18,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 
 from ohos.util.param_search import search_start
-from ohos.util.parameter_tuning_space import space_xgb, \
-    objective_xgb_regression
     
-
-
-import xgboost as xgb
-xgb.__version__ # works with xgboost version 1.5.0
-# $ conda install xgboost==1.5.0
 
 from ohos.tree_functions import orf_train, porf_train, \
     xgb_train, rf_train, rf_plus_Sb_train
