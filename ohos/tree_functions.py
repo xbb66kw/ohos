@@ -14,7 +14,6 @@ from hyperopt import hp
 
 from ohos.util.param_search import search_start
 from ohos.util.parameter_tuning_space import \
-    objective_xgb_regression, space_xgb, \
     objective_orf_regression, space_orf,\
     objective_porf_regression, space_porf,\
     objective_rf_regression_aug, objective_rf_regression, space_rf,\
