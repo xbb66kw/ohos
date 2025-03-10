@@ -21,7 +21,7 @@ from ohos.util.param_search import search_start
     
 
 from ohos.tree_functions import orf_train, porf_train, \
-    xgb_train, rf_train, rf_plus_Sb_train
+    rf_train, rf_plus_Sb_train
 
 import warnings 
 warnings.filterwarnings('ignore')
