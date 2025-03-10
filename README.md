@@ -1,5 +1,6 @@
 Install this Python package by following these steps:  
 
+0. Require Python (>=3.9).
 1. Download the **ohos** Python package.
 2. Rename the folder to **ohos** (default name: **ohos-main**).
 3. Open a terminal and navigate to the main folder of the **ohos** package.
@@ -13,5 +14,5 @@ Install this Python package by following these steps:
    ```  
 6. Restart your Python editor if needed.
 
-The `treeple` package is required for benchmark comparisons. Require Python (>=3.9).
+The `treeple` package is required for benchmark comparisons.
    
