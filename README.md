@@ -12,4 +12,4 @@ Install this Python package by following these steps:
    ```  
 5. Restart your Python editor if needed.
 
-
+The `treeple` package is required for benchmark comparisons.
