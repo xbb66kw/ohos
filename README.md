@@ -8,7 +8,7 @@ Install this Python package by following these steps:
    ```
    pip install numpy pandas scikit-learn==1.6.1 treeple==0.9.1 hyperopt
    ```
-5. Run the following command:  
+5. Run the following command to install the **ohos** package:
    ```
    pip install -e .
    ```
