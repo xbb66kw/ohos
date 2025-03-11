@@ -50,11 +50,11 @@ result = path_temp.split("/")
 path = ''
 checker = True
 for elem in result:
-    if elem != 'ohot' and checker:
+    if elem != 'ohos' and checker:
         path = path + elem + '/'
     else:
         checker = False
-path = path + 'ohot' + '/'
+path = path + 'ohos' + '/'
 # My path is '/Users/xbb/Dropbox/', where 'xbb' is the name of 
 # my device.
 
