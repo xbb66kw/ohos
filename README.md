@@ -11,8 +11,16 @@ Install this Python package by following these steps:
 5. Run the following command:  
    ```
    pip install -e .
-   ```  
-6. Restart your Python editor if needed.
+   ```
+6. You can check within Python by trying to import the package:
+   ```
+   try:
+      import ohos
+      print("Package is installed.")
+   except ImportError:
+      print("Package is NOT installed.")
+   ```
+8. Restart your Python editor if needed.
 
 The `treeple` package is required for benchmark comparisons.
    
