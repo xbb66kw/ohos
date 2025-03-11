@@ -181,11 +181,11 @@ if False:
     path = ''
     checker = True
     for elem in result:
-        if elem != 'ohot' and checker:
+        if elem != 'ohos' and checker:
             path = path + elem + '/'
         else:
             checker = False
-    path = path + 'ohot' + '/'
+    path = path + 'ohos' + '/'
     
         
     for ind_sample in range(19):
