@@ -22,5 +22,5 @@ Install this Python package by following these steps:
    ```
 8. Restart your Python editor if needed.
 
-The `treeple` package is required for benchmark comparisons.
+If you are unable to install this package, you can still use the code by manually copying and pasting the provided source files. If you only need the source code for my progressive tree, the `treeple` package is not required. However, `treeple` is necessary for benchmark comparisons.
    
