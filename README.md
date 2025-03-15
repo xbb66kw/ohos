@@ -22,5 +22,5 @@ Install this Python package by following these steps:
    ```
 8. Restart your Python editor if needed.
 
-If you are unable to install this package, you can still use the provided source files, starting with `ohos/script/example.py`. If you only need the source code for my progressive tree, the `treeple` package is not required. However, `treeple` is necessary for benchmark comparisons.
+If you are unable to install this package, you can still use the provided source files, starting with `ohos/scripts/example.py`. If you only need the source code for my progressive tree, the `treeple` package is not required. However, `treeple` is necessary for benchmark comparisons.
    
