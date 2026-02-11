@@ -94,7 +94,7 @@ if __name__ == '__main__':
     
     for ind_sample in all_indices:
     # for ind_sample in range(start_ind_sample, 19):
-        file = path + 'openml/dataset/numpy' + str(ind_sample)
+        file = path + 'openml/dataset/' + str(ind_sample)
         with open(file, 'rb') as f:        
             dataset = pickle.load(f)        
         X_, y_, dataset = dataset
