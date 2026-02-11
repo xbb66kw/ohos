@@ -11,7 +11,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 
 
-from ohos.tree_functions import rf_plus_Sb_train, obtree_train
+from ohos.tree_functions import rf_plus_Sb_train
+from ohos.ProgressiveTree import ProgressiveTree
 
 import warnings 
 warnings.filterwarnings('ignore')
@@ -65,7 +66,7 @@ X_train_in, X_train_out, y_train_in, y_train_out = \
 # Initilize
 # pro_tree is a ProgressiveTree object.
 # irf is a CustomRF object.
-irf, pro_tree = rf_plus_Sb_train(X_train_in, 
+irf, pro_tree, _, _ = rf_plus_Sb_train(X_train_in, 
                                  X_train_out, 
                                  y_train_in, 
                                  y_train_out,
@@ -83,14 +84,31 @@ print(f"R^2 score of our progressive forest?: { 1 - mse_irf / np.var(y_test)}.")
 
 
 #%%
-# Continue training the progressive tree model
-param, pro_tree = obtree_train(X_train_in, 
-                             X_train_out, 
-                             y_train_in, 
-                             y_train_out,                               
-                             max_evals = max_evals_)
+
+# Initialize the final model with best parameters
+pro_tree = ProgressiveTree(
+    max_depth = 3, 
+    s = 5,
+    min_samples_leaf = 10,
+    min_samples_split = 10,
+    n_S = 100,
+)
+
+
+# We use the full training set (X_train_in) to settle on the 
+# final weights after finding the best hyperparameters.
+pro_tree.initialize(X_train, y_train)
+
+for _ in range(100):
+    pro_tree.restart(X_train, y_train)
+    
+pro_tree.finalize(X_train, y_train)
+# Finalize the oblique weights for prediction
+pro_tree.expanded_weights = pro_tree.used_weights
 
 y_pred_obtree = pro_tree.predict(X_test)
+
+
 
 mse_obtree = mean_squared_error(y_test, y_pred_obtree)
 print(f"R^2 score of an oblique tree: { 1 - mse_obtree / np.var(y_test)}.")
